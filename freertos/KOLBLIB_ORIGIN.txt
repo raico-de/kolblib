@@ -1,0 +1,4 @@
+FreeRTOS-Kernel v11.1.0
+Source: C:\NXP\S32DS.3.6.5\S32DS\software\PlatformSDK_S32K3\FreeRTOS\Source
+NXP component ids: platform.os.freertos / platform.os.freertosCM7 / platform.os.freertos_heap_4
+Not present under S32DS.3.6.9 PlatformSDK_S32K3 (verified 2026-07-30).

@@ -1,0 +1,47 @@
+---
+description: NEVER modify manufacturer/vendor libraries unless explicitly asked
+alwaysApply: true
+---
+
+# NEVER Touch Vendor / Manufacturer Libraries
+
+**ABSOLUTE RULE — NEVER violate. Keine Ausnahmen ohne explizite Anweisung.**
+
+## Forbidden Without Explicit User Request
+
+- NEVER modify manufacturer/vendor libraries unless the user EXPLICITLY asks to edit that specific file or vendor tree.
+- NEVER "hand-patch" RTD, NXP PlatformSDK, FreeRTOS vendor tree, mbedtls `library/`, or tcpip stack sources to work around board bugs.
+- NEVER edit vendor files "just to make it compile" or "as a quick fix."
+
+## Where Work Belongs
+
+Do work in **project-owned code only**:
+
+- `board/`
+- `src/`
+- Ask before changing `generate/` if it is S32DS Update-Code output.
+
+## Explicit Forbidden Trees (unless user names them)
+
+- `RTD/`
+- `stacks/tcpip/` and `kolblib/tcpip/`
+- `kolblib/freertos/`
+- `kolblib/mbedtls/library/` and `kolblib/mbedtls/include/`
+- Any path under NXP S32DS PlatformSDK install
+
+## If a Fix Seems to Require Vendor Edits
+
+1. **STOP.** Do not patch.
+2. Explain why vendor code appears involved.
+3. Propose a board/app-layer workaround in project-owned code.
+4. Ask permission with **exact file paths** before touching any vendor tree.
+
+## Past Mistake — Must Not Repeat
+
+These were patched without request — **never again** unless explicitly asked:
+
+- `Eth_43_GMAC.c`
+- `Eth_43_GMAC_Ipw.c`
+- `eth_port.c`
+
+When in doubt: fix in `board/` or `src/`, or ask first.
