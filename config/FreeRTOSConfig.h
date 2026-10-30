@@ -56,7 +56,8 @@
 #define configCHECK_FOR_STACK_OVERFLOW              0
 
 #define configGENERATE_RUN_TIME_STATS               0
-#define configUSE_TRACE_FACILITY                    0
+/* Task list on /sys.html. Two words per TCB. Runtime stats stay off. */
+#define configUSE_TRACE_FACILITY                    1
 #define configUSE_STATS_FORMATTING_FUNCTIONS        0
 
 #define configUSE_CO_ROUTINES                       0
@@ -97,5 +98,18 @@
 #define vPortSVCHandler                             SVC_Handler
 #define xPortPendSVHandler                          PendSV_Handler
 #define xPortSysTickHandler                         SysTick_Handler
+
+/* Load meter in board/t102_cpu.c. Runtime stats stay off.
+ * traceISR_ENTER has no argument; the CM7 port calls it only from SysTick.
+ * Id 0 is T102_CPU_ISR_TICK. */
+extern void T102_Cpu_SwitchedIn(void);
+extern void T102_Cpu_SwitchedOut(void);
+extern void T102_Cpu_IsrEnter(unsigned id);
+extern void T102_Cpu_IsrExit(void);
+#define traceTASK_SWITCHED_IN()               T102_Cpu_SwitchedIn()
+#define traceTASK_SWITCHED_OUT()              T102_Cpu_SwitchedOut()
+#define traceISR_ENTER()                      T102_Cpu_IsrEnter(0U)
+#define traceISR_EXIT()                       T102_Cpu_IsrExit()
+#define traceISR_EXIT_TO_SCHEDULER()          T102_Cpu_IsrExit()
 
 #endif /* FREERTOS_CONFIG_H */
